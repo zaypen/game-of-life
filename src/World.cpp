@@ -19,21 +19,21 @@ uint8_t Survive(uint8_t alive, int64_t lives) {
 }
 
 void World::Update() {
-    auto buffer = vector<uint8_t>(static_cast<uint64_t>(width * height));
+    auto buffer = vector<uint8_t>(width * height);
     for (auto index = 0; index < width * height; index++) {
         auto alive = cells[index];
-        auto x = static_cast<int16_t>(index % width), y = static_cast<int16_t>(index / width);
+        auto x = index % width, y = index / width;
         int64_t lives = AliveNeighbor(x, y);
         buffer[index] = Survive(alive, lives);
     }
     swap(cells, buffer);
 }
 
-uint8_t World::AliveNeighbor(int16_t x, int16_t y) {
+uint8_t World::AliveNeighbor(uint32_t x, uint32_t y) {
     uint8_t count = 0;
     for (auto oy = -1; oy < 2; oy++) {
         for (auto ox = -1; ox < 2; ox++) {
-            auto dx = x + ox, dy = y + oy;
+            auto dx = static_cast<int32_t>(x) + ox, dy = static_cast<int32_t>(y) + oy;
             auto valid = (ox != 0 || oy != 0) && dx > -1 && dx < width && dy > -1 && dy < height;
             if (valid && cells[dy * width + dx] != 0) {
                 count++;

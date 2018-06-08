@@ -6,10 +6,10 @@ Renderer::Renderer(RenderTarget& window, World& world): renderTarget(window), wo
 
 void Renderer::Render() {
     renderTarget.clear(Color::Black);
-    for (int16_t y = 0; y < 30; y++) {
-        for (int16_t x = 0; x < 40; x++) {
+    for (uint32_t y = 0; y < world.GetHeight(); y++) {
+        for (uint32_t x = 0; x < world.GetWidth(); x++) {
             if (world.GetCell(x, y)) {
-                circle.setPosition(x * 20 + 10, y * 20 + 10);
+                circle.setPosition(x * 20 + 2, y * 20 + 2);
                 renderTarget.draw(circle);
             }
         }

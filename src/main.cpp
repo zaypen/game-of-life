@@ -7,7 +7,8 @@
 using namespace sf;
 
 int main() {
-    World world(40, 30);
+    static uint32_t width = 40, height = 30;
+    World world(width, height);
     world.SetCell(0, 1);
     world.SetCell(1, 2);
     world.SetCell(2, 0);
@@ -15,7 +16,7 @@ int main() {
     world.SetCell(2, 2);
     world.SetCell(2, 3);
     Clock clock;
-    RenderWindow window(VideoMode(800, 600), "Game of Life");
+    RenderWindow window(VideoMode(width * 20, height * 20), "Game of Life");
     Renderer renderer(window, world);
     InputManager input(window, world);
     window.setFramerateLimit(60);

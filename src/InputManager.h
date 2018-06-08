@@ -9,9 +9,7 @@ using namespace sf;
 
 class InputManager {
 public:
-    explicit InputManager(World& world, Window& window, Renderer& renderer) : world(world), window(window),
-                                                                              renderer(renderer), originX(0),
-                                                                              originY(0), mousePressed(false) {}
+    explicit InputManager(World& world, Window& window, Renderer& renderer);
 
     void KeyPressed(const Event::KeyEvent& event);
     void KeyReleased(const Event::KeyEvent& event);
@@ -27,6 +25,7 @@ private:
     Renderer& renderer;
     int32_t originX, originY;
     bool mousePressed;
+    Cursor normal, hand;
 };
 
 

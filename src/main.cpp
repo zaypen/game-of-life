@@ -16,9 +16,9 @@ int main() {
     world.SetCell(2, 2);
     world.SetCell(2, 3);
     Clock clock;
-    RenderWindow window(VideoMode(width * 20, height * 20), "Game of Life");
-    Renderer renderer(window, world);
-    InputManager input(window, world);
+    RenderWindow window(VideoMode(800, 600), "Game of Life");
+    Renderer renderer(world, window);
+    InputManager input(world, window, renderer);
     window.setFramerateLimit(60);
     while (window.isOpen()) {
         Event event{};
@@ -33,6 +33,17 @@ int main() {
                 case Event::KeyReleased:
                     input.KeyReleased(event.key);
                     break;
+                case Event::MouseButtonPressed:
+                    input.MouseButtonPressed(event.mouseButton);
+                    break;
+                case Event::MouseButtonReleased:
+                    input.MouseButtonReleased(event.mouseButton);
+                    break;
+                case Event::MouseMoved:
+                    input.MouseMoved(event.mouseMove);
+                    break;
+                case Event::MouseWheelScrolled:
+                    input.MouseWheelScrolled(event.mouseWheelScroll);
                 default:
                     break;
             }
@@ -41,6 +52,7 @@ int main() {
             world.Update();
             clock.restart();
         }
+        window.clear(Color::Black);
         renderer.Render();
         window.display();
     }

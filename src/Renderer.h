@@ -8,13 +8,15 @@ using namespace sf;
 
 class Renderer {
 public:
-    explicit Renderer(RenderTarget& window, World& world);
+    explicit Renderer(World& world, RenderTarget& renderTarget);
 
+    void Move(float dx, float dy);
     void Render();
 
 private:
-    RenderTarget& renderTarget;
     World& world;
+    RenderTarget& renderTarget;
+    View view;
     CircleShape circle;
 };
 

@@ -9,11 +9,9 @@ using namespace std;
 
 class World {
 public:
-    World(int16_t width, int16_t height);
-
-    World() = delete;
-
-private:
+    explicit World(int16_t width, int16_t height) : width(width), height(height),
+                                                    cells(static_cast<uint64_t>(width * height)) {
+    };
 
 public:
     void Update();

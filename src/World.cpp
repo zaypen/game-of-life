@@ -18,9 +18,6 @@ uint8_t Survive(uint8_t alive, int64_t lives) {
     return DEAD;
 }
 
-World::World(int16_t width, int16_t height) : width(width), height(height), cells(static_cast<uint64_t>(width * height)) {
-}
-
 void World::Update() {
     auto buffer = vector<uint8_t>(static_cast<uint64_t>(width * height));
     for (auto index = 0; index < width * height; index++) {

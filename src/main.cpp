@@ -2,18 +2,21 @@
 #include <SFML/Graphics.hpp>
 #include "World.h"
 #include "InputManager.h"
+#include "Renderer.h"
 
 using namespace sf;
 
 int main() {
     World world(40, 30);
     world.SetCell(0, 1);
-    world.SetCell(1, 1);
+    world.SetCell(1, 2);
+    world.SetCell(2, 0);
     world.SetCell(2, 1);
-    CircleShape cell(8);
-    cell.setFillColor(Color(250, 250, 250));
+    world.SetCell(2, 2);
+    world.SetCell(2, 3);
     Clock clock;
     RenderWindow window(VideoMode(800, 600), "Game of Life");
+    Renderer renderer(window, world);
     InputManager input(window, world);
     window.setFramerateLimit(60);
     while (window.isOpen()) {
@@ -37,15 +40,7 @@ int main() {
             world.Update();
             clock.restart();
         }
-        window.clear(Color::Black);
-        for (auto y = 0; y < 30; y++) {
-            for (auto x = 0; x < 40; x++) {
-                if (world.GetCell(x, y)) {
-                    cell.setPosition(x * 20 + 10, y * 20 + 10);
-                    window.draw(cell);
-                }
-            }
-        }
+        renderer.Render();
         window.display();
     }
     return 0;

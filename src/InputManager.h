@@ -2,10 +2,9 @@
 #define GAME_OF_LIFE_INPUT_MANAGER_H
 
 #include <SFML/Window.hpp>
+#include "World.h"
 
 using namespace sf;
-
-class World;
 
 class InputManager {
 public:

@@ -17,6 +17,7 @@ private:
     World& world;
     RenderTarget& renderTarget;
     View view;
+    RectangleShape rectangle;
     CircleShape circle;
 };
 

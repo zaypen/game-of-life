@@ -9,7 +9,8 @@ using namespace std;
 
 class World {
 public:
-    explicit World(uint32_t width, uint32_t height) : width(width), height(height), cells(width * height) {};
+    explicit World(uint32_t width, uint32_t height) : width(width), height(height), cells(width * height),
+                                                      paused(false) {};
 
 public:
     void Update();
@@ -31,14 +32,22 @@ public:
         assert(y * width + x < width * height);
         cells[y * width + x] = alive;
     };
+
+    bool IsPaused() const {
+        return paused;
+    }
+
+    void SetPaused(bool paused) {
+        World::paused = paused;
+    }
+
 protected:
     uint8_t AliveNeighbor(uint32_t x, uint32_t y);
 
 protected:
     uint32_t width, height;
-
-protected:
     vector<uint8_t> cells;
+    bool paused;
 };
 
 

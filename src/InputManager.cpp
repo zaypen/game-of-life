@@ -12,6 +12,9 @@ void InputManager::KeyPressed(const Event::KeyEvent& event) {
         case Keyboard::Escape:
             window.close();
             break;
+        case Keyboard::Space:
+            world.SetPaused(!world.IsPaused());
+            break;
         default:
             break;
     }

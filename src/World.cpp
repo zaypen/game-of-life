@@ -19,6 +19,7 @@ uint8_t Survive(uint8_t alive, int64_t lives) {
 }
 
 void World::Update() {
+    if (paused) return;
     auto buffer = vector<uint8_t>(width * height);
     for (auto index = 0; index < width * height; index++) {
         auto alive = cells[index];

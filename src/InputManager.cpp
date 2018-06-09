@@ -16,6 +16,18 @@ void InputManager::KeyPressed(const Event::KeyEvent& event) {
             world.SetPaused(!world.IsPaused());
             renderer.SetEditing(world.IsPaused());
             break;
+        case Keyboard::A:
+            world.SetInterval(world.GetInterval() + 100);
+            break;
+        case Keyboard::D:
+            world.SetInterval(world.GetInterval() - 100);
+            break;
+        case Keyboard::W:
+            renderer.Zoom(-0.1f);
+            break;
+        case Keyboard::S:
+            renderer.Zoom(0.1f);
+            break;
         case Keyboard::F:
             ToggleCursor();
             break;

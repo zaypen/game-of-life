@@ -10,6 +10,8 @@ class Renderer {
 public:
     explicit Renderer(World& world, RenderTarget& renderTarget);
 
+    void Initialize(const Vector2u& size);
+    void ResizeWindow(const Event::SizeEvent &event);
     void MouseMoved(Vector2i position);
     void Move(float dx, float dy);
     void Zoom(float ds);

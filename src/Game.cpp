@@ -6,8 +6,9 @@ Game::Game(uint32_t width, uint32_t height) : world(width, height),
                                               input(world, renderWindow, renderer) {
     ContextSettings settings;
     settings.antialiasingLevel = 8;
-    renderWindow.create(VideoMode(1600, 1200), "Game of Life", Style::Default, settings);
+    renderWindow.create(VideoMode(800, 600), "Game of Life", Style::Default, settings);
     renderWindow.setFramerateLimit(60);
+    renderer.Initialize(renderWindow.getSize());
     world.SetCell(0, 1);
     world.SetCell(1, 2);
     world.SetCell(2, 0);
@@ -20,7 +21,6 @@ void Game::Run() {
     while (renderWindow.isOpen()) {
         HandleEvents();
         world.Update();
-        renderWindow.clear(Color::Black);
         renderer.Render();
         renderWindow.display();
     }
@@ -32,6 +32,9 @@ void Game::HandleEvents() {
         switch (event.type) {
             case Event::Closed:
                 renderWindow.close();
+                break;
+            case Event::Resized:
+                renderer.ResizeWindow(event.size);
                 break;
             case Event::KeyPressed:
                 input.KeyPressed(event.key);

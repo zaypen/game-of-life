@@ -10,15 +10,28 @@ static uint16_t GridWidth = 20;
 Renderer::Renderer(World &world, RenderTarget &renderTarget) : world(world), renderTarget(renderTarget),
                                                                view(), scale(1.f), rectangle(), circle(), square(),
                                                                cursor(0, 0), editing(false) {
-    view.reset(FloatRect(0, 0, world.GetWidth() * GridWidth, world.GetHeight() * GridWidth));
-    rectangle.setSize(Vector2f(world.GetWidth() * GridWidth, world.GetHeight() * GridWidth));
+    uint32_t width = world.GetWidth() * GridWidth, height = world.GetHeight() * GridWidth;
+    rectangle.setSize(Vector2f(width, height));
     rectangle.setFillColor(Color(60, 130, 190, 192));
     square.setSize(Vector2f(16.f, 16.f));
-    square.setFillColor(Color(0, 0, 0, 0));
-    square.setOutlineColor(Color(250, 250, 250, 128));
+    square.setFillColor(Color::Transparent);
+    square.setOutlineColor(Color::White);
     square.setOutlineThickness(2);
     circle.setRadius(8);
-    circle.setFillColor(Color(250, 250, 250));
+    circle.setFillColor(Color::White);
+}
+
+void Renderer::Initialize(const Vector2u& size) {
+    uint32_t width = world.GetWidth() * GridWidth, height = world.GetHeight() * GridWidth;
+    float hScale = static_cast<float>(width) / size.x, vScale = static_cast<float>(height) / size.y;
+    scale = max(hScale, vScale);
+    // Put center and inside of window
+    view.reset(FloatRect(Vector2f((width - size.x * scale) / 2, (height - size.y * scale) / 2),
+                         Vector2f(size.x, size.y) * scale));
+}
+
+void Renderer::ResizeWindow(const Event::SizeEvent& event) {
+    view.setSize(Vector2f(event.width, event.height) * scale);
 }
 
 void Renderer::MouseMoved(Vector2i position) {
@@ -30,19 +43,19 @@ void Renderer::MouseMoved(Vector2i position) {
 }
 
 void Renderer::Move(float dx, float dy) {
-    view.move(dx, dy);
+    view.move(dx * scale, dy * scale);
 }
 
 void Renderer::Zoom(float ds) {
-    auto center = view.getCenter() / scale, size = view.getSize() / scale;
+    auto size = view.getSize() / scale;
     scale += ds;
     scale = max(.1f, min(10.f, scale));
-    view.setCenter(center * scale);
     view.setSize(size * scale);
 }
 
 void Renderer::Render() {
-    auto previousView = renderTarget.getView();
+    auto fixed = renderTarget.getView();
+    renderTarget.clear(Color::Transparent);
     renderTarget.setView(view);
     renderTarget.draw(rectangle);
     for (uint32_t y = 0; y < world.GetHeight(); y++) {
@@ -56,5 +69,5 @@ void Renderer::Render() {
     if (editing && IsCursorValid()) {
         renderTarget.draw(square);
     }
-    renderTarget.setView(previousView);
+    renderTarget.setView(fixed);
 }

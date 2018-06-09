@@ -35,12 +35,12 @@ public:
         cells[y * width + x] = alive;
     };
 
-    int32_t GetInterval() const {
+    uint32_t GetInterval() const {
         return interval;
     };
 
-    void SetInterval(int32_t interval) {
-        World::interval = interval;
+    void SetInterval(uint32_t interval) {
+        World::interval = max(100u, min(1000u, interval));
     };
 
     bool IsPaused() const {

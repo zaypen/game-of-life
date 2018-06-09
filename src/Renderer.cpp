@@ -7,9 +7,9 @@ using namespace std;
 
 static uint16_t GridWidth = 20;
 
-Renderer::Renderer(World &world, RenderTarget &renderTarget) : world(world), renderTarget(renderTarget),
-                                                               view(), scale(1.f), rectangle(), circle(), square(),
-                                                               cursor(0, 0), editing(false) {
+Renderer::Renderer(World& world, RenderTarget& renderTarget) : world(world), renderTarget(renderTarget),
+                                                               view(), scale(1.f), maxScale(1.f), rectangle(), circle(),
+                                                               square(), cursor(0, 0), editing(false) {
     uint32_t width = world.GetWidth() * GridWidth, height = world.GetHeight() * GridWidth;
     rectangle.setSize(Vector2f(width, height));
     rectangle.setFillColor(Color(60, 130, 190, 192));
@@ -24,7 +24,7 @@ Renderer::Renderer(World &world, RenderTarget &renderTarget) : world(world), ren
 void Renderer::Initialize(const Vector2u& size) {
     uint32_t width = world.GetWidth() * GridWidth, height = world.GetHeight() * GridWidth;
     float hScale = static_cast<float>(width) / size.x, vScale = static_cast<float>(height) / size.y;
-    scale = max(hScale, vScale);
+    scale = maxScale = max(hScale, vScale);
     // Put center and inside of window
     view.reset(FloatRect(Vector2f((width - size.x * scale) / 2, (height - size.y * scale) / 2),
                          Vector2f(size.x, size.y) * scale));
@@ -49,7 +49,7 @@ void Renderer::Move(float dx, float dy) {
 void Renderer::Zoom(float ds) {
     auto size = view.getSize() / scale;
     scale += ds;
-    scale = max(.1f, min(10.f, scale));
+    scale = max(.1f, min(maxScale, scale));
     view.setSize(size * scale);
 }
 

@@ -37,7 +37,7 @@ private:
     World& world;
     RenderTarget& renderTarget;
     View view;
-    float scale;
+    float scale, maxScale;
     RectangleShape rectangle;
     CircleShape circle;
     RectangleShape square;

@@ -4,7 +4,9 @@ Game::Game(uint32_t width, uint32_t height) : world(width, height),
                                               renderWindow(),
                                               renderer(world, renderWindow),
                                               input(world, renderWindow, renderer) {
-    renderWindow.create(VideoMode(1600, 1200), "Game of Life");
+    ContextSettings settings;
+    settings.antialiasingLevel = 8;
+    renderWindow.create(VideoMode(1600, 1200), "Game of Life", Style::Default, settings);
     renderWindow.setFramerateLimit(60);
     world.SetCell(0, 1);
     world.SetCell(1, 2);

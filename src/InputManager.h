@@ -20,6 +20,8 @@ public:
     void MouseWheelScrolled(const Event::MouseWheelScrollEvent& event);
 
 protected:
+    void ToggleCursor();
+    void FillRandomly();
     void UpdateMouseCursor();
 private:
     World& world;

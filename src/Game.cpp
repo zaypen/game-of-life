@@ -4,7 +4,7 @@ Game::Game(uint32_t width, uint32_t height) : world(width, height),
                                               renderWindow(),
                                               renderer(world, renderWindow),
                                               input(world, renderWindow, renderer) {
-    renderWindow.create(VideoMode(width * 20, height * 20), "Game of Life");
+    renderWindow.create(VideoMode(1600, 1200), "Game of Life");
     renderWindow.setFramerateLimit(60);
     world.SetCell(0, 1);
     world.SetCell(1, 2);

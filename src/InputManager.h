@@ -19,12 +19,14 @@ public:
     void MouseMoved(const Event::MouseMoveEvent& event);
     void MouseWheelScrolled(const Event::MouseWheelScrollEvent& event);
 
+protected:
+    void UpdateMouseCursor();
 private:
     World& world;
     Window& window;
     Renderer& renderer;
     int32_t originX, originY;
-    bool mousePressed;
+    bool leftButtonPressed;
     Cursor normal, hand;
 };
 

@@ -1,9 +1,13 @@
 #include "Renderer.h"
 
+#include <algorithm>
+
+using namespace std;
+
 static uint16_t GridWidth = 20;
 
 Renderer::Renderer(World& world, RenderTarget& renderTarget) : world(world), renderTarget(renderTarget),
-                                                               view(), rectangle(), circle(8) {
+                                                               view(), scale(1.f), rectangle(), circle(8) {
     view.reset(FloatRect(0, 0, world.GetWidth() * GridWidth, world.GetHeight() * GridWidth));
     rectangle.setSize(Vector2f(world.GetWidth() * GridWidth, world.GetHeight() * GridWidth));
     rectangle.setFillColor(Color(60, 130, 190, 192));
@@ -12,6 +16,14 @@ Renderer::Renderer(World& world, RenderTarget& renderTarget) : world(world), ren
 
 void Renderer::Move(float dx, float dy) {
     view.move(dx, dy);
+}
+
+void Renderer::Zoom(float ds) {
+    auto center = view.getCenter() / scale, size = view.getSize() / scale;
+    scale += ds;
+    scale = max(.1f, min(10.f, scale));
+    view.setCenter(center * scale);
+    view.setSize(size * scale);
 }
 
 void Renderer::Render() {

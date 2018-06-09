@@ -11,12 +11,14 @@ public:
     explicit Renderer(World& world, RenderTarget& renderTarget);
 
     void Move(float dx, float dy);
+    void Zoom(float ds);
     void Render();
 
 private:
     World& world;
     RenderTarget& renderTarget;
     View view;
+    float scale;
     RectangleShape rectangle;
     CircleShape circle;
 };

@@ -43,6 +43,7 @@ void InputManager::MouseMoved(const Event::MouseMoveEvent& event) {
 }
 
 void InputManager::MouseWheelScrolled(const Event::MouseWheelScrollEvent& event) {
-    renderer.Move(event.wheel == Mouse::Wheel::HorizontalWheel ? -event.delta : 0,
-                  event.wheel == Mouse::Wheel::VerticalWheel ? -event.delta : 0);
+    if (event.wheel == Mouse::Wheel::VerticalWheel) {
+        renderer.Zoom(event.delta * 0.01f);
+    }
 }

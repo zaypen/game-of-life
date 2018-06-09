@@ -63,5 +63,9 @@ void InputManager::MouseMoved(const Event::MouseMoveEvent& event) {
 void InputManager::MouseWheelScrolled(const Event::MouseWheelScrollEvent& event) {
     if (event.wheel == Mouse::Wheel::VerticalWheel) {
         renderer.Zoom(event.delta * 0.01f);
+    } else {
+        auto di = event.delta == 0 ? 0 : event.delta > 0 ? 100 : -100;
+        auto interval = max(100, min(1000, world.GetInterval() - di));
+        world.SetInterval(interval);
     }
 }

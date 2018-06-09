@@ -15,13 +15,9 @@ Game::Game(uint32_t width, uint32_t height) : world(width, height),
 }
 
 void Game::Run() {
-    Clock clock;
     while (renderWindow.isOpen()) {
         HandleEvents();
-        if (clock.getElapsedTime().asMilliseconds() > 1000) {
-            world.Update();
-            clock.restart();
-        }
+        world.Update();
         renderWindow.clear(Color::Black);
         renderer.Render();
         renderWindow.display();

@@ -4,13 +4,15 @@
 #include <cstdint>
 #include <cassert>
 #include <vector>
+#include <SFML/System/Clock.hpp>
 
 using namespace std;
+using namespace sf;
 
 class World {
 public:
     explicit World(uint32_t width, uint32_t height) : width(width), height(height), cells(width * height),
-                                                      paused(false) {};
+                                                      clock(), interval(500), paused(false) {};
 
 public:
     void Update();
@@ -33,6 +35,14 @@ public:
         cells[y * width + x] = alive;
     };
 
+    int32_t GetInterval() const {
+        return interval;
+    };
+
+    void SetInterval(int32_t interval) {
+        World::interval = interval;
+    };
+
     bool IsPaused() const {
         return paused;
     }
@@ -47,6 +57,10 @@ protected:
 protected:
     uint32_t width, height;
     vector<uint8_t> cells;
+    Clock clock;
+    uint32_t interval;
+
+protected:
     bool paused;
 };
 

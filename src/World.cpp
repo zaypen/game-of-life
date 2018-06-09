@@ -20,6 +20,7 @@ uint8_t Survive(uint8_t alive, int64_t lives) {
 
 void World::Update() {
     if (paused) return;
+    if (clock.getElapsedTime().asMilliseconds() < interval) return;
     auto buffer = vector<uint8_t>(width * height);
     for (auto index = 0; index < width * height; index++) {
         auto alive = cells[index];
@@ -28,6 +29,7 @@ void World::Update() {
         buffer[index] = Survive(alive, lives);
     }
     swap(cells, buffer);
+    clock.restart();
 }
 
 uint8_t World::AliveNeighbor(uint32_t x, uint32_t y) {

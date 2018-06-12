@@ -21,11 +21,28 @@ A demo implementation of [Conway's Game of Life](https://en.wikipedia.org/wiki/C
 
 - [SFML](https://www.sfml-dev.org/)([Github](https://github.com/SFML/SFML))
 
-(Skip this step for Mac users)
+#### Debian/Ubuntu
 
-1. Download SFML binaries of your system from [SFML Download Page](https://www.sfml-dev.org/download.php)
-1. Replace `include` and `lib` in project with the same directories what you download
-1. `*.dll` for Windows and `*.so` for Linux in `lib` are required, ensure they are placed where could be loaded by executable. eg. together with the executable
+```bash
+sudo apt-get install libsfml-dev
+```
+
+#### Fedora
+
+```bash
+sudo yum install sfml
+```
+
+#### macOS
+
+```bash
+sudo port install sfml # MacPorts, or
+brew install sfml # homebrew
+```
+
+#### Other systems, including Windows
+Download the SDK from the download page, unpack it and copy the files to your preferred location.
+And export/set environment variable `SFML_ROOT` to the location.
 
 ### Build
 
@@ -60,4 +77,4 @@ Mouse left drag | Move the world
 
 ## License
 
-
+See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).

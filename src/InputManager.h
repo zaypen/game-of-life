@@ -29,7 +29,6 @@ private:
     Renderer& renderer;
     int32_t originX, originY;
     bool leftButtonPressed;
-    Cursor normal, hand;
 };
 
 

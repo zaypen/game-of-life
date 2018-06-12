@@ -3,8 +3,6 @@
 InputManager::InputManager(World& world, Window& window, Renderer& renderer) : world(world), window(window),
                                                                                renderer(renderer), originX(0),
                                                                                originY(0), leftButtonPressed(false) {
-    normal.loadFromSystem(Cursor::Arrow);
-    hand.loadFromSystem(Cursor::Hand);
 }
 
 void InputManager::KeyPressed(const Event::KeyEvent& event) {
@@ -56,7 +54,6 @@ void InputManager::MouseButtonReleased(const Event::MouseButtonEvent& event) {
 }
 
 void InputManager::UpdateMouseCursor() {
-    window.setMouseCursor(leftButtonPressed ? hand : normal);
     window.setMouseCursorGrabbed(leftButtonPressed);
 }
 

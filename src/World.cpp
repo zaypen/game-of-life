@@ -18,21 +18,21 @@ uint8_t Survive(uint8_t alive, int64_t lives) {
     return DEAD;
 }
 
-void World::Update() {
+void World::update() {
     if (paused) return;
     if (clock.getElapsedTime().asMilliseconds() < interval) return;
     auto buffer = vector<uint8_t>(width * height);
     for (auto index = 0; index < width * height; index++) {
         auto alive = cells[index];
         auto x = index % width, y = index / width;
-        int64_t lives = AliveNeighbor(x, y);
+        int64_t lives = aliveNeighbor(x, y);
         buffer[index] = Survive(alive, lives);
     }
     swap(cells, buffer);
     clock.restart();
 }
 
-uint8_t World::AliveNeighbor(uint32_t x, uint32_t y) {
+uint8_t World::aliveNeighbor(uint32_t x, uint32_t y) {
     uint8_t count = 0;
     for (auto oy = -1; oy < 2; oy++) {
         for (auto ox = -1; ox < 2; ox++) {

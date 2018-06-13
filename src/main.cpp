@@ -19,6 +19,6 @@ int main(int argc, char **argv) {
         }
     }
     Game game(w, h);
-    game.Run();
+    game.run();
     return 0;
 }

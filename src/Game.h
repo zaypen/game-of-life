@@ -15,10 +15,10 @@ public:
     Game() : Game(40, 30) {}
     Game(uint32_t width, uint32_t height);
 
-    void Run();
+    void run();
 
 private:
-    void HandleEvents();
+    void handleEvents();
 
 private:
     World world;

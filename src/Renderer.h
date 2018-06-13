@@ -10,26 +10,26 @@ class Renderer {
 public:
     explicit Renderer(World& world, RenderTarget& renderTarget);
 
-    void Initialize(const Vector2u& size);
-    void ResizeWindow(const Event::SizeEvent &event);
-    void MouseMoved(Vector2i position);
-    void Move(float dx, float dy);
-    void Zoom(float ds);
-    void Render();
+    void initialize(const Vector2u &size);
+    void resizeWindow(const Event::SizeEvent &event);
+    void mouseMoved(Vector2i position);
+    void move(float dx, float dy);
+    void zoom(float ds);
+    void render();
 
-    Vector2i GetCursor() const {
+    Vector2i getCursor() const {
         return cursor;
     };
 
-    bool IsCursorValid() const {
-        return cursor.x > -1 && cursor.x < world.GetWidth() && cursor.y > -1 && cursor.y < world.GetHeight();
+    bool isCursorValid() const {
+        return cursor.x > -1 && cursor.x < world.getWidth() && cursor.y > -1 && cursor.y < world.getHeight();
     }
 
-    bool IsEditing() const {
+    bool isEditing() const {
         return editing;
     }
 
-    void SetEditing(bool editing) {
+    void setEditing(bool editing) {
         Renderer::editing = editing;
     }
 

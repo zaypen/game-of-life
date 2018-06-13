@@ -10,7 +10,7 @@ static uint16_t GridWidth = 20;
 Renderer::Renderer(World& world, RenderTarget& renderTarget) : world(world), renderTarget(renderTarget),
                                                                view(), scale(1.f), maxScale(1.f), rectangle(), circle(),
                                                                square(), cursor(0, 0), editing(false) {
-    uint32_t width = world.GetWidth() * GridWidth, height = world.GetHeight() * GridWidth;
+    uint32_t width = world.getWidth() * GridWidth, height = world.getHeight() * GridWidth;
     rectangle.setSize(Vector2f(width, height));
     rectangle.setFillColor(Color(60, 130, 190, 192));
     square.setSize(Vector2f(16.f, 16.f));
@@ -21,8 +21,8 @@ Renderer::Renderer(World& world, RenderTarget& renderTarget) : world(world), ren
     circle.setFillColor(Color::White);
 }
 
-void Renderer::Initialize(const Vector2u& size) {
-    uint32_t width = world.GetWidth() * GridWidth, height = world.GetHeight() * GridWidth;
+void Renderer::initialize(const Vector2u &size) {
+    uint32_t width = world.getWidth() * GridWidth, height = world.getHeight() * GridWidth;
     float hScale = static_cast<float>(width) / size.x, vScale = static_cast<float>(height) / size.y;
     scale = maxScale = max(hScale, vScale);
     // Put center and inside of window
@@ -30,11 +30,11 @@ void Renderer::Initialize(const Vector2u& size) {
                          Vector2f(size.x, size.y) * scale));
 }
 
-void Renderer::ResizeWindow(const Event::SizeEvent& event) {
+void Renderer::resizeWindow(const Event::SizeEvent &event) {
     view.setSize(Vector2f(event.width, event.height) * scale);
 }
 
-void Renderer::MouseMoved(Vector2i position) {
+void Renderer::mouseMoved(Vector2i position) {
     auto worldPosition = renderTarget.mapPixelToCoords(position, view);
     auto x = floor(worldPosition.x / GridWidth), y = floor(worldPosition.y / GridWidth);
     cursor = Vector2i(static_cast<int>(x), static_cast<int>(y));
@@ -42,31 +42,31 @@ void Renderer::MouseMoved(Vector2i position) {
     square.setPosition(worldPosition);
 }
 
-void Renderer::Move(float dx, float dy) {
+void Renderer::move(float dx, float dy) {
     view.move(dx * scale, dy * scale);
 }
 
-void Renderer::Zoom(float ds) {
+void Renderer::zoom(float ds) {
     auto size = view.getSize() / scale;
     scale += ds;
     scale = max(.1f, min(maxScale, scale));
     view.setSize(size * scale);
 }
 
-void Renderer::Render() {
+void Renderer::render() {
     auto fixed = renderTarget.getView();
     renderTarget.clear(Color::Transparent);
     renderTarget.setView(view);
     renderTarget.draw(rectangle);
-    for (uint32_t y = 0; y < world.GetHeight(); y++) {
-        for (uint32_t x = 0; x < world.GetWidth(); x++) {
-            if (world.GetCell(x, y)) {
+    for (uint32_t y = 0; y < world.getHeight(); y++) {
+        for (uint32_t x = 0; x < world.getWidth(); x++) {
+            if (world.getCell(x, y)) {
                 circle.setPosition(x * GridWidth + 2, y * GridWidth + 2);
                 renderTarget.draw(circle);
             }
         }
     }
-    if (editing && IsCursorValid()) {
+    if (editing && isCursorValid()) {
         renderTarget.draw(square);
     }
     renderTarget.setView(fixed);

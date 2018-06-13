@@ -8,25 +8,25 @@ Game::Game(uint32_t width, uint32_t height) : world(width, height),
     settings.antialiasingLevel = 8;
     renderWindow.create(VideoMode(800, 600), "Game of Life", Style::Default, settings);
     renderWindow.setFramerateLimit(60);
-    renderer.Initialize(renderWindow.getSize());
-    world.SetCell(0, 1);
-    world.SetCell(1, 2);
-    world.SetCell(2, 0);
-    world.SetCell(2, 1);
-    world.SetCell(2, 2);
-    world.SetCell(2, 3);
+    renderer.initialize(renderWindow.getSize());
+    world.setCell(0, 1);
+    world.setCell(1, 2);
+    world.setCell(2, 0);
+    world.setCell(2, 1);
+    world.setCell(2, 2);
+    world.setCell(2, 3);
 }
 
-void Game::Run() {
+void Game::run() {
     while (renderWindow.isOpen()) {
-        HandleEvents();
-        world.Update();
-        renderer.Render();
+        handleEvents();
+        world.update();
+        renderer.render();
         renderWindow.display();
     }
 }
 
-void Game::HandleEvents() {
+void Game::handleEvents() {
     Event event{};
     while (renderWindow.pollEvent(event)) {
         switch (event.type) {
@@ -34,25 +34,25 @@ void Game::HandleEvents() {
                 renderWindow.close();
                 break;
             case Event::Resized:
-                renderer.ResizeWindow(event.size);
+                renderer.resizeWindow(event.size);
                 break;
             case Event::KeyPressed:
-                input.KeyPressed(event.key);
+                input.keyPressed(event.key);
                 break;
             case Event::KeyReleased:
-                input.KeyReleased(event.key);
+                input.keyReleased(event.key);
                 break;
             case Event::MouseButtonPressed:
-                input.MouseButtonPressed(event.mouseButton);
+                input.mouseButtonPressed(event.mouseButton);
                 break;
             case Event::MouseButtonReleased:
-                input.MouseButtonReleased(event.mouseButton);
+                input.mouseButtonReleased(event.mouseButton);
                 break;
             case Event::MouseMoved:
-                input.MouseMoved(event.mouseMove);
+                input.mouseMoved(event.mouseMove);
                 break;
             case Event::MouseWheelScrolled:
-                input.MouseWheelScrolled(event.mouseWheelScroll);
+                input.mouseWheelScrolled(event.mouseWheelScroll);
             default:
                 break;
         }

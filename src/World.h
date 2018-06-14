@@ -6,13 +6,14 @@
 #include <vector>
 #include <SFML/System/Clock.hpp>
 
+#include "Cell.h"
+
 using namespace std;
 using namespace sf;
 
 class World {
 public:
-    explicit World(uint32_t width, uint32_t height) : width(width), height(height), cells(width * height),
-                                                      clock(), interval(500), paused(false) {};
+    explicit World(uint32_t width, uint32_t height);
 
 public:
     void update();
@@ -25,14 +26,14 @@ public:
         return height;
     }
 
-    uint8_t getCell(uint32_t x, uint32_t y) {
+    Cell getCell(uint32_t x, uint32_t y) {
         assert(y * width + x < width * height);
         return cells[y * width + x];
     }
 
-    void setCell(uint32_t x, uint32_t y, uint8_t alive = 1) {
+    void setCell(uint32_t x, uint32_t y, Cell cell = Cell(Cell::Alive)) {
         assert(y * width + x < width * height);
-        cells[y * width + x] = alive;
+        cells[y * width + x] = cell;
     };
 
     uint32_t getInterval() const {
@@ -52,11 +53,11 @@ public:
     }
 
 protected:
-    uint8_t aliveNeighbor(uint32_t x, uint32_t y);
+    uint32_t aliveNeighbor(uint32_t x, uint32_t y);
 
 protected:
     uint32_t width, height;
-    vector<uint8_t> cells;
+    vector<Cell> cells;
     Clock clock;
     uint32_t interval;
 

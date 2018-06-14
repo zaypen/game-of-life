@@ -60,7 +60,7 @@ void Renderer::render() {
     renderTarget.draw(rectangle);
     for (uint32_t y = 0; y < world.getHeight(); y++) {
         for (uint32_t x = 0; x < world.getWidth(); x++) {
-            if (world.getCell(x, y)) {
+            if (world.getCell(x, y).getState() == Cell::Alive) {
                 circle.setPosition(x * GridWidth + 2, y * GridWidth + 2);
                 renderTarget.draw(circle);
             }

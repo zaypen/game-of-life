@@ -9,12 +9,12 @@ Game::Game(uint32_t width, uint32_t height) : world(width, height),
     renderWindow.create(VideoMode(800, 600), "Game of Life", Style::Default, settings);
     renderWindow.setFramerateLimit(60);
     renderer.initialize(renderWindow.getSize());
-    world.setCell(0, 1);
-    world.setCell(1, 2);
-    world.setCell(2, 0);
-    world.setCell(2, 1);
-    world.setCell(2, 2);
-    world.setCell(2, 3);
+    world.setCell(0, 1, Cell(Cell::Alive));
+    world.setCell(1, 2, Cell(Cell::Alive));
+    world.setCell(2, 0, Cell(Cell::Alive));
+    world.setCell(2, 1, Cell(Cell::Alive));
+    world.setCell(2, 2, Cell(Cell::Alive));
+    world.setCell(2, 3, Cell(Cell::Alive));
 }
 
 void Game::run() {

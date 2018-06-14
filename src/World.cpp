@@ -2,47 +2,46 @@
 
 #include <utility>
 
-#define ALIVE (1)
-#define DEAD (0)
-
-uint8_t Survive(uint8_t alive, int64_t lives) {
-    if (alive) {
+Cell::CellState tick(Cell::CellState alive, uint32_t lives) {
+    if (alive == Cell::Alive) {
         if (lives == 2 || lives == 3) {
-            return ALIVE;
+            return Cell::Alive;
         } else {
-            return DEAD;
+            return Cell::Dead;
         }
     } else if (lives == 3) {
-        return ALIVE;
+        return Cell::Alive;
     }
-    return DEAD;
+    return Cell::Dead;
 }
+
+World::World(uint32_t width, uint32_t height) : width(width), height(height), cells(width * height),
+                                                clock(), interval(500), paused(false) {}
 
 void World::update() {
     if (paused) return;
     if (clock.getElapsedTime().asMilliseconds() < interval) return;
-    auto buffer = vector<uint8_t>(width * height);
+    auto buffer = vector<Cell>(width * height);
     for (auto index = 0; index < width * height; index++) {
-        auto alive = cells[index];
+        auto alive = cells[index].getState();
         auto x = index % width, y = index / width;
-        int64_t lives = aliveNeighbor(x, y);
-        buffer[index] = Survive(alive, lives);
+        auto lives = aliveNeighbor(x, y);
+        buffer[index] = Cell(tick(alive, lives));
     }
     swap(cells, buffer);
     clock.restart();
 }
 
-uint8_t World::aliveNeighbor(uint32_t x, uint32_t y) {
-    uint8_t count = 0;
+uint32_t World::aliveNeighbor(uint32_t x, uint32_t y) {
+    uint32_t count = 0;
     for (auto oy = -1; oy < 2; oy++) {
         for (auto ox = -1; ox < 2; ox++) {
             auto dx = static_cast<int32_t>(x) + ox, dy = static_cast<int32_t>(y) + oy;
             auto valid = (ox != 0 || oy != 0) && dx > -1 && dx < width && dy > -1 && dy < height;
-            if (valid && cells[dy * width + dx] != 0) {
+            if (valid && cells[dy * width + dx].getState() == Cell::Alive) {
                 count++;
             }
         }
     }
     return count;
 }
-

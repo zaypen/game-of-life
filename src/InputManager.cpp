@@ -81,14 +81,14 @@ void InputManager::toggleCursor() {
     if (renderer.isEditing() && renderer.isCursorValid()) {
         auto cursor = renderer.getCursor();
         auto x = static_cast<uint32_t>(cursor.x), y = static_cast<uint32_t>(cursor.y);
-        world.setCell(x, y, world.getCell(x, y) ? uint8_t(0) : uint8_t(1));
+        world.setCell(x, y, world.getCell(x, y).getState() ? Cell() : Cell(Cell::Alive));
     }
 }
 
 void InputManager::fillRandomly() {
     for (uint32_t y = 0; y < world.getHeight(); y++) {
         for (uint32_t x = 0; x < world.getWidth(); x++) {
-            world.setCell(x, y, static_cast<uint8_t>(rand() % 2));
+            world.setCell(x, y, Cell::random());
         }
     }
 }

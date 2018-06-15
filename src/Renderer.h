@@ -3,12 +3,15 @@
 
 #include <SFML/Graphics.hpp>
 #include "World.h"
+#include "FrameClock.h"
+#include "FrameOverlay.h"
 
 using namespace sf;
+using namespace sfx;
 
 class Renderer {
 public:
-    explicit Renderer(World& world, RenderTarget& renderTarget);
+    explicit Renderer(World& world, RenderTarget& renderTarget, FrameClock& frameClock);
 
     void initialize(const Vector2u &size);
     void resizeWindow(const Event::SizeEvent &event);
@@ -30,12 +33,22 @@ public:
     }
 
     void setEditing(bool editing) {
-        Renderer::editing = editing;
+        this->editing = editing;
+    }
+
+    bool isFrameOverlayVisible() const {
+        return frameOverlayVisible;
+    }
+
+    void setFrameOverlayVisible(bool frameOverlayVisible) {
+        this->frameOverlayVisible = frameOverlayVisible;
     }
 
 private:
     World& world;
     RenderTarget& renderTarget;
+    Font font;
+    FrameOverlay frameOverlay;
     View view;
     float scale, maxScale;
     RectangleShape rectangle;
@@ -43,6 +56,7 @@ private:
     RectangleShape square;
     Vector2i cursor;
     bool editing;
+    bool frameOverlayVisible;
 };
 
 

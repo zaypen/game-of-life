@@ -7,8 +7,10 @@
 #include "World.h"
 #include "InputManager.h"
 #include "Renderer.h"
+#include "FrameClock.h"
 
 using namespace sf;
+using namespace sfx;
 
 class Game {
 public:
@@ -24,6 +26,7 @@ private:
     World world;
     RenderWindow renderWindow;
     Renderer renderer;
+    FrameClock frameClock;
     InputManager input;
 };
 

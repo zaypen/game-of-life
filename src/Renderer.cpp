@@ -7,9 +7,11 @@ using namespace std;
 
 static uint16_t GridWidth = 20;
 
-Renderer::Renderer(World& world, RenderTarget& renderTarget) : world(world), renderTarget(renderTarget),
+Renderer::Renderer(World& world, RenderTarget& renderTarget, FrameClock& frameClock) : world(world), renderTarget(renderTarget),
+                                                               font(), frameOverlay(frameClock, font),
                                                                view(), scale(1.f), maxScale(1.f), rectangle(), circle(),
-                                                               square(), cursor(0, 0), editing(false) {
+                                                               square(), cursor(0, 0), editing(false), frameOverlayVisible(false) {
+    font.loadFromFile("resources/Arial.ttf");
     uint32_t width = world.getWidth() * GridWidth, height = world.getHeight() * GridWidth;
     rectangle.setSize(Vector2f(width, height));
     rectangle.setFillColor(Color(60, 130, 190, 192));
@@ -70,4 +72,7 @@ void Renderer::render() {
         renderTarget.draw(square);
     }
     renderTarget.setView(fixed);
+    if (frameOverlayVisible) {
+        renderTarget.draw(frameOverlay);
+    }
 }

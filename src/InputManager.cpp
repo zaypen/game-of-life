@@ -32,6 +32,9 @@ void InputManager::keyPressed(const Event::KeyEvent &event) {
         case Keyboard::F5:
             fillRandomly();
             break;
+        case Keyboard::F12:
+            renderer.setFrameOverlayVisible(!renderer.isFrameOverlayVisible());
+            break;
         default:
             break;
     }

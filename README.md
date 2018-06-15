@@ -74,6 +74,7 @@ D | Speed up
 Mouse wheel (horizontal) | Change speed
 Mouse wheel (vertical) | Scale the world
 Mouse left drag | Move the world
+F12 | Toggle Frame stats.
 
 ## License
 

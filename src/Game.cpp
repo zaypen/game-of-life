@@ -2,7 +2,8 @@
 
 Game::Game(uint32_t width, uint32_t height) : world(width, height),
                                               renderWindow(),
-                                              renderer(world, renderWindow),
+                                              frameClock(),
+                                              renderer(world, renderWindow, frameClock),
                                               input(world, renderWindow, renderer) {
     ContextSettings settings;
     settings.antialiasingLevel = 8;
@@ -19,10 +20,12 @@ Game::Game(uint32_t width, uint32_t height) : world(width, height),
 
 void Game::run() {
     while (renderWindow.isOpen()) {
+        frameClock.beginFrame();
         handleEvents();
         world.update();
         renderer.render();
         renderWindow.display();
+        frameClock.endFrame();
     }
 }
 

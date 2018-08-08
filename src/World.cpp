@@ -15,12 +15,9 @@ Cell::CellState tick(Cell::CellState alive, uint32_t lives) {
     return Cell::Dead;
 }
 
-World::World(uint32_t width, uint32_t height) : width(width), height(height), cells(width * height),
-                                                clock(), interval(500), paused(false) {}
+World::World(uint32_t width, uint32_t height) : width(width), height(height), cells(width * height) {}
 
 void World::update() {
-    if (paused) return;
-    if (clock.getElapsedTime().asMilliseconds() < interval) return;
     auto buffer = vector<Cell>(width * height);
     for (auto index = 0; index < width * height; index++) {
         auto alive = cells[index].getState();
@@ -29,7 +26,6 @@ void World::update() {
         buffer[index] = Cell(tick(alive, lives));
     }
     swap(cells, buffer);
-    clock.restart();
 }
 
 uint32_t World::aliveNeighbor(uint32_t x, uint32_t y) {

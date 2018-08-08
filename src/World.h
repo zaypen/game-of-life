@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <cassert>
 #include <vector>
-#include <SFML/System/Clock.hpp>
+#include <SFML/System.hpp>
 
 #include "Cell.h"
 
@@ -26,6 +26,10 @@ public:
         return height;
     }
 
+    Vector2u getSize() const {
+        return {width, height};
+    }
+
     Cell getCell(uint32_t x, uint32_t y) {
         assert(y * width + x < width * height);
         return cells[y * width + x];
@@ -36,33 +40,12 @@ public:
         cells[y * width + x] = cell;
     };
 
-    uint32_t getInterval() const {
-        return interval;
-    };
-
-    void setInterval(uint32_t interval) {
-        World::interval = max(100u, min(1000u, interval));
-    };
-
-    bool isPaused() const {
-        return paused;
-    }
-
-    void setPaused(bool paused) {
-        World::paused = paused;
-    }
-
 protected:
     uint32_t aliveNeighbor(uint32_t x, uint32_t y);
 
 protected:
     uint32_t width, height;
     vector<Cell> cells;
-    Clock clock;
-    uint32_t interval;
-
-protected:
-    bool paused;
 };
 
 
